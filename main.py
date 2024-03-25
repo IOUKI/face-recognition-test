@@ -25,13 +25,27 @@ biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
-    obama_face_encoding,
-    biden_face_encoding
+    # obama_face_encoding,
+    # biden_face_encoding,
 ]
 known_face_names = [
-    "Lan",
-    "Ray"
+    # "Lan",
+    # "Ray",
 ]
+
+gates_image = face_recognition.load_image_file("images/3.jpeg")
+gates_face_encoding = face_recognition.face_encodings(gates_image)[0]
+
+# 測試如果有50000個名單狀況
+for i in range(50000):
+    known_face_encodings.append(gates_face_encoding)
+    known_face_names.append(f"William Henry Gates {i}")
+    print(f"William Henry Gates {i} load")
+known_face_encodings.append(obama_face_encoding)
+known_face_names.append("Lan")
+
+known_face_encodings.append(biden_face_encoding)
+known_face_names.append("Ray")
 
 # Initialize some variables
 face_locations = []
@@ -70,8 +84,12 @@ while True:
             # Or instead, use the known face with the smallest distance to the new face
             face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
+            
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
+                print("你好" + name)
+            else:
+                print('查無此人')
 
             face_names.append(name)
 
